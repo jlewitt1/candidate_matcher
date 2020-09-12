@@ -1,0 +1,93 @@
+[
+  {
+    "model": "matcher_app.skill",
+    "pk": 1,
+    "fields": {
+      "skill_name": "Python"
+    }
+  },
+  {
+    "model": "matcher_app.skill",
+    "pk": 2,
+    "fields": {
+      "skill_name": "Javascript"
+    }
+  },
+  {
+    "model": "matcher_app.skill",
+    "pk": 3,
+    "fields": {
+      "skill_name": "Postgres"
+    }
+  },
+  {
+    "model": "matcher_app.skill",
+    "pk": 4,
+    "fields": {
+      "skill_name": "Law"
+    }
+  },
+  {
+    "model": "matcher_app.skill",
+    "pk": 5,
+    "fields": {
+      "skill_name": "Accounting"
+    }
+  },
+  {
+    "model": "matcher_app.skill",
+    "pk": 6,
+    "fields": {
+      "skill_name": "Physics"
+    }
+  },
+  {
+    "model": "matcher_app.skill",
+    "pk": 7,
+    "fields": {
+      "skill_name": "Math"
+    }
+  },
+  {
+    "model": "matcher_app.skill",
+    "pk": 8,
+    "fields": {
+      "skill_name": "Writing"
+    }
+  },
+  {
+    "model": "matcher_app.skill",
+    "pk": 9,
+    "fields": {
+      "skill_name": "Medicine"
+    }
+  },
+  {
+    "model": "matcher_app.skill",
+    "pk": 10,
+    "fields": {
+      "skill_name": "Driving"
+    }
+  },
+  {
+    "model": "matcher_app.skill",
+    "pk": 11,
+    "fields": {
+      "skill_name": "Juggling"
+    }
+  },
+  {
+    "model": "matcher_app.skill",
+    "pk": 12,
+    "fields": {
+      "skill_name": "Reading"
+    }
+  },
+    {
+    "model": "matcher_app.skill",
+    "pk": 13,
+    "fields": {
+      "skill_name": "Running"
+    }
+  }
+]

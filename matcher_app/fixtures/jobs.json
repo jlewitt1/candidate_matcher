@@ -1,0 +1,110 @@
+[
+  {
+    "model": "matcher_app.job",
+    "pk": 1,
+    "fields": {
+      "title": "Software Engineer",
+      "status": "opened",
+      "skill": "Python"
+    }
+  },
+  {
+    "model": "matcher_app.job",
+    "pk": 2,
+    "fields": {
+      "title": "Software Developer",
+      "status": "opened",
+      "skill": "Javascript"
+    }
+  },
+  {
+    "model": "matcher_app.job",
+    "pk": 3,
+    "fields": {
+      "title": "Writer",
+      "status": "closed",
+      "skill": "Writing"
+    }
+  },
+  {
+    "model": "matcher_app.job",
+    "pk": 4,
+    "fields": {
+      "title": "Accountant",
+      "status": "opened",
+      "skill": "Accounting"
+    }
+  },
+  {
+    "model": "matcher_app.job",
+    "pk": 5,
+    "fields": {
+      "title": "Physics Professor",
+      "status": "opened",
+      "skill": "Physics"
+    }
+  },
+  {
+    "model": "matcher_app.job",
+    "pk": 6,
+    "fields": {
+      "title": "Mathematician",
+      "status": "opened",
+      "skill": "Math"
+    }
+  },
+  {
+    "model": "matcher_app.job",
+    "pk": 7,
+    "fields": {
+      "title": "Doctor",
+      "status": "opened",
+      "skill": "Medicine"
+    }
+  },
+  {
+    "model": "matcher_app.job",
+    "pk": 8,
+    "fields": {
+      "title": "Taxi Driver",
+      "status": "opened",
+      "skill": "Driving"
+    }
+  },
+  {
+    "model": "matcher_app.job",
+    "pk": 9,
+    "fields": {
+      "title": "Lawyer",
+      "status": "opened",
+      "skill": "Law"
+    }
+  },
+  {
+    "model": "matcher_app.job",
+    "pk": 10,
+    "fields": {
+      "title": "Database Manager",
+      "status": "opened",
+      "skill": "Postgres"
+    }
+  },
+  {
+    "model": "matcher_app.job",
+    "pk": 11,
+    "fields": {
+      "title": "Clown",
+      "status": "pending",
+      "skill": "Juggling"
+    }
+  },
+  {
+    "model": "matcher_app.job",
+    "pk": 12,
+    "fields": {
+      "title": "Content Writer",
+      "status": "opened",
+      "skill": "Reading"
+    }
+  }
+]

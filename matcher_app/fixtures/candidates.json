@@ -1,0 +1,98 @@
+[
+  {
+    "model": "matcher_app.candidate",
+    "pk": 1,
+    "fields": {
+      "title": "Software Developer",
+      "skills": [1, 2, 3]
+    }
+  },
+  {
+    "model": "matcher_app.candidate",
+    "pk": 2,
+    "fields": {
+      "title": "Doctor",
+      "skills": [6, 7, 9]
+    }
+  },
+  {
+    "model": "matcher_app.candidate",
+    "pk": 3,
+    "fields": {
+      "title": "Lawyer",
+      "skills": [4, 8]
+    }
+  },
+  {
+    "model": "matcher_app.candidate",
+    "pk": 4,
+    "fields": {
+      "title": "Writer",
+      "skills": [8, 12]
+    }
+  },
+  {
+    "model": "matcher_app.candidate",
+    "pk": 5,
+    "fields": {
+      "title": "Physics Professor",
+      "skills": [6, 7]
+    }
+  },
+  {
+    "model": "matcher_app.candidate",
+    "pk": 6,
+    "fields": {
+      "title": "Accountant",
+      "skills": [5, 7]
+    }
+  },
+  {
+    "model": "matcher_app.candidate",
+    "pk": 7,
+    "fields": {
+      "title": "Database Manager",
+      "skills": [3]
+    }
+  },
+  {
+    "model": "matcher_app.candidate",
+    "pk": 8,
+    "fields": {
+      "title": "Mathematician",
+      "skills": [7]
+    }
+  },
+  {
+    "model": "matcher_app.candidate",
+    "pk": 9,
+    "fields": {
+      "title": "Athlete",
+      "skills": [13]
+    }
+  },
+  {
+    "model": "matcher_app.candidate",
+    "pk": 10,
+    "fields": {
+      "title": "Taxi Driver",
+      "skills": [10]
+    }
+  },
+  {
+    "model": "matcher_app.candidate",
+    "pk": 11,
+    "fields": {
+      "title": "Electrical Engineer",
+      "skills": [1, 7]
+    }
+  },
+    {
+    "model": "matcher_app.candidate",
+    "pk": 12,
+    "fields": {
+      "title": "Clown",
+      "skills": [11]
+    }
+  }
+]
