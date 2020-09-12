@@ -71,8 +71,9 @@ def candidate_finder(job_obj):
         # If an opinion was expressed for the candidate for this job, remove candidate from final list of candidates
         final_candidates = check_if_opinions_exist_for_candidates(potential_candidates)
 
-        # save new matched candidates to Match table
-        utils.add_matched_candidates_to_table(final_candidates, job_obj.job_id)
+        # save final list of matched candidates to Match table
+        if final_candidates:
+            utils.add_matched_candidates_to_table(final_candidates, job_obj.job_id)
 
     except Exception as e:
         logger.error(f'Error getting all matching candidates: {e}')

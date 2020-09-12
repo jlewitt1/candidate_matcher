@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from matcher_app import models, serializers, utils, candidate_finder
 import logging
@@ -13,7 +14,7 @@ logger = logging.getLogger(__name__)
 def get_all_candidates_for_job(request, job_id):
     """returns list of all matching candidate ids for given job"""
     if request.method == 'GET':
-        job_obj = models.Job.objects.get(job_id=job_id)
+        job_obj = get_object_or_404(models.Job.objects, job_id=job_id)
         is_closed = job_obj.status == 'closed'
         if is_closed:  # do not return any candidates if given job is closed
             return Response([], status=status.HTTP_204_NO_CONTENT)
@@ -30,7 +31,10 @@ def add_opinion_for_candidate(request):
     """provide an opinion (like or dislike) for a given candidate based on given job"""
     if request.method == 'POST':
         opinion_data = request.data
-        job_obj = models.Job.objects.get(job_id=int(opinion_data['job_id']))
+        job_obj = get_object_or_404(models.Job.objects, job_id=int(opinion_data['job_id']))
+        if not isinstance(opinion_data['is_liked'], bool):
+            return Response('Invalid option for is_liked field', status=status.HTTP_400_BAD_REQUEST)
+
         if opinion_data['is_liked']:  # add to like table
             is_open = job_obj.status == 'opened'
             if not is_open:  # check if job is open before adding like
@@ -38,14 +42,14 @@ def add_opinion_for_candidate(request):
 
             like_serializer = serializers.LikeSerializer(data=opinion_data)
             if like_serializer.is_valid(raise_exception=True):
-                logger.info(f"USER \\ Creating new like...")
+                logger.info(f"Creating new like...")
                 like_serializer.save()
                 return Response('Like added', status=status.HTTP_200_OK)
 
         else:  # add to dislike table
             dislike_serializer = serializers.DislikeSerializer(data=opinion_data)
             if dislike_serializer.is_valid(raise_exception=True):
-                logger.info(f"USER \\ Creating new dislike...")
+                logger.info(f"Creating new dislike...")
                 dislike_serializer.save()
                 return Response('Dislike added', status=status.HTTP_200_OK)
 
@@ -55,7 +59,7 @@ def add_opinion_for_candidate(request):
 def get_data_for_liked_candidates(request, job_id):
     """retrieve all data associated with liked candidates for a given job (order desc by time)"""
     if request.method == 'GET':
-        job_obj = models.Job.objects.get(job_id=job_id)
+        job_obj = get_object_or_404(models.Job.objects, job_id=job_id)
         is_closed = job_obj.status == 'closed'
         if is_closed:  # do not return any candidates if given job is closed
             return Response([], status=status.HTTP_204_NO_CONTENT)
@@ -76,19 +80,18 @@ def add_note_for_liked_candidate(request):
     if request.method == 'POST':  # add note for liked candidate
         note_data = request.data
         job_id = int(note_data['job_id'])
-        job_obj = models.Job.objects.get(job_id=job_id)
+        job_obj = get_object_or_404(models.Job.objects, job_id=job_id)
         # check if given note meets conditions to be added to table (job not closed and candidate is liked)
         is_closed = job_obj.status == 'closed'
         # using filter since a given candidate could be liked multiple times for the same job
         is_liked = models.Like.objects.filter(candidate_id_id=note_data['candidate_id'], job_id_id=job_id)
         if is_closed or not is_liked:  # check if conditions are met to add like
-            logger.info(f"USER \\ Job must be open and candidate must be liked")
             return Response("Invalid entry - job must be open and candidate must be liked",
                             status=status.HTTP_400_BAD_REQUEST)
         else:  # add the note for the given candidate
             serializer = serializers.NoteSerializer(data=note_data)
             if serializer.is_valid(raise_exception=True):
-                logger.info(f"USER \\ Creating new note for job_id {note_data['job_id']}")
+                logger.info(f"Creating new note for job_id {note_data['job_id']}")
                 serializer.save()
         return Response('Added note successfully', status=status.HTTP_200_OK)
 

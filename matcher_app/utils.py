@@ -8,7 +8,7 @@ def add_matched_candidates_to_table(matching_candidates, job_id):
     res_list = [{"candidate_id": candidate_id, "job_id": job_id} for candidate_id in matching_candidates]
     match_serializer = serializers.MatchSerializer(data=res_list, many=True)
     if match_serializer.is_valid(raise_exception=True):
-        logger.info(f"USER \\ Adding new matched candidates to table...")
+        logger.info(f"Adding new matched candidates to table...")
         match_serializer.save()
 
 
