@@ -15,21 +15,20 @@
        
 * Create local postgres database with the name "matcher"
    
-    - In the matcher.settings file the database settings should be defined as follows:
+* In the matcher.settings file the database settings should be defined as follows:
        
-       
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'matcher',
-            'USER': {Your postgres user},
-            'PASSWORD': {Your postgres password},
-            'HOST': 'localhost',
-            'PORT': '5432',
-        }
-    }
+       DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'matcher',
+                'USER': {Your postgres user},
+                'PASSWORD': {Your postgres password},
+                'HOST': 'localhost',
+                'PORT': '5432',
+            }
+       }
+    
 
-       
 * Make migrations / migrate tables
        
        python manage.py makemigrations
