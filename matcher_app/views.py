@@ -16,9 +16,9 @@ def get_all_candidates_for_job(request, job_id):
         job_obj = models.Job.objects.get(job_id=job_id)
         is_closed = job_obj.status == 'closed'
         if is_closed:  # do not return any candidates if given job is closed
-            return Response([], status=status.HTTP_200_OK)
+            return Response([], status=status.HTTP_204_NO_CONTENT)
 
-        # calls candidate_finder function --> checks for valid matches, and adds the matches to the Match table
+        # calls candidate_finder function - checks for valid matches, and adds the matches to the Match table
         all_candidates = candidate_finder.candidate_finder(job_obj)
         logger.info(f'All candidates for job {job_id}: {all_candidates}')
         return Response(all_candidates, status=status.HTTP_200_OK)
@@ -35,6 +35,7 @@ def add_opinion_for_candidate(request):
             is_open = job_obj.status == 'opened'
             if not is_open:  # check if job is open before adding like
                 return Response('Job is not open - cannot add like', status=status.HTTP_400_BAD_REQUEST)
+
             like_serializer = serializers.LikeSerializer(data=opinion_data)
             if like_serializer.is_valid(raise_exception=True):
                 logger.info(f"USER \\ Creating new like...")
@@ -57,7 +58,8 @@ def get_data_for_liked_candidates(request, job_id):
         job_obj = models.Job.objects.get(job_id=job_id)
         is_closed = job_obj.status == 'closed'
         if is_closed:  # do not return any candidates if given job is closed
-            return Response([], status=status.HTTP_200_OK)
+            return Response([], status=status.HTTP_204_NO_CONTENT)
+
         liked_candidates = models.Like.objects.filter(job_id_id=job_id)
         serializer = serializers.LikeSerializer(liked_candidates, many=True)
         data_list = list(serializer.data)
@@ -70,7 +72,7 @@ def get_data_for_liked_candidates(request, job_id):
 @csrf_exempt
 @api_view(['POST'])
 def add_note_for_liked_candidate(request):
-    """add note for given job and candidate - saves new note to the Note table"""
+    """add note for liked candidate for specific job - new note saved to the Note table"""
     if request.method == 'POST':  # add note for liked candidate
         note_data = request.data
         job_id = int(note_data['job_id'])
@@ -81,7 +83,8 @@ def add_note_for_liked_candidate(request):
         is_liked = models.Like.objects.filter(candidate_id_id=note_data['candidate_id'], job_id_id=job_id)
         if is_closed or not is_liked:  # check if conditions are met to add like
             logger.info(f"USER \\ Job must be open and candidate must be liked")
-            return Response(f"Invalid entry - job must be open and candidate must be liked")
+            return Response("Invalid entry - job must be open and candidate must be liked",
+                            status=status.HTTP_400_BAD_REQUEST)
         else:  # add the note for the given candidate
             serializer = serializers.NoteSerializer(data=note_data)
             if serializer.is_valid(raise_exception=True):
@@ -95,14 +98,14 @@ def add_note_for_liked_candidate(request):
 def handle_given_job(request, job_id=None):
     """handles actions related to a specific job - updating its status or getting various stats"""
     if request.method == 'PUT':  # update status of given job - data provided in request body
-        try:
-            job_id = request.data['job_id']
-            job_status = request.data['status']
-            models.Job.objects.filter(job_id=job_id).update(status=job_status)
-            return Response('Status updated', status=status.HTTP_200_OK)
-        except Exception as e:
-            logger.error(f'Unable to update status of job: {e}')
-            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+        job_id = request.data['job_id']
+        job_status = request.data['status']
+        job_status_options = [choice[0] for choice in models.jobStatusChoices]
+        if job_status not in job_status_options:
+            return Response(f'Unable to update job with status {job_status}: ', status=status.HTTP_400_BAD_REQUEST)
+
+        models.Job.objects.filter(job_id=job_id).update(status=job_status)
+        return Response(f'Status updated to {job_status}', status=status.HTTP_200_OK)
 
     if request.method == 'GET':  # get all stats on given job
         num_likes = models.Like.objects.filter(job_id_id=job_id).count()

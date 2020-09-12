@@ -34,7 +34,6 @@ def get_matches_from_job_title(job_obj):
 
 
 def get_matches_from_skill(job_obj):
-    """check for matching skills"""
     skill_to_check = job_obj.skill.capitalize()
     skill_id = models.Skill.objects.get(skill_name=skill_to_check).id
     query_set_skills = models.Candidate.objects.filter(skills=skill_id)
@@ -44,6 +43,7 @@ def get_matches_from_skill(job_obj):
 
 
 def check_if_opinions_exist_for_candidates(potential_candidates):
+    """ensures the final list of matched candidates does not include candidates who received an opinion"""
     final_candidates = []
     for candidate in potential_candidates:
         like_opinion = next(iter(models.Like.objects.filter(candidate_id=candidate)), None)
@@ -62,8 +62,11 @@ def candidate_finder(job_obj):
         # for a more accurate approach -> implement levenshtein distance algorithm as described above
         matching_title_candidates = get_matches_from_job_title(job_obj)
         matching_skills_candidates = get_matches_from_skill(job_obj)
+
         # ideal candidates will match with both title and skill
         potential_candidates = list(set(matching_title_candidates) & set(matching_skills_candidates))
+        if not potential_candidates:  # if there are no matches for both skills - try taking candidates with only one
+            potential_candidates = list(set(matching_title_candidates) | set(matching_skills_candidates))
 
         # If an opinion was expressed for the candidate for this job, remove candidate from final list of candidates
         final_candidates = check_if_opinions_exist_for_candidates(potential_candidates)

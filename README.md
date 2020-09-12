@@ -2,7 +2,7 @@
 
 ## About 
 * Web server which provides candidate recommendations for given jobs
-* Implements various APIs for expressing opinions / adding notes / querying data on the matcher
+* Implements various APIs for expressing opinions / adding notes / querying data for candidates and jobs
 
 ## Stack
 * Django
@@ -38,7 +38,8 @@
         
        python manage.py loaddata skills.json jobs.json candidates.json
 
-* Overview of all REST API calls 
+* Overview of all REST API calls: 
+    
     https://documenter.getpostman.com/view/3026991/TVK5d29a
 
 * Running tests:
@@ -46,5 +47,9 @@
        python manage.py test matcher_app
        
 ## Running on Heroku
-
+* Main url for making REST API calls: 
+    
+   https://candidate-matching.herokuapp.com/
+        
+   - Heroku database has same initial data as local database
 
