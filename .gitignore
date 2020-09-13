@@ -1,6 +1,5 @@
 matcher_venv
 .idea
-notes.txt
 # Byte-compiled / optimized / DLL files
 **/__pycache__/
 *.py[cod]

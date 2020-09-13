@@ -1,8 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
-from rest_framework import status
 from matcher_app import models, serializers, utils, candidate_finder
 import logging
 
@@ -20,9 +20,10 @@ def get_all_candidates_for_job(request, job_id):
             return Response([], status=status.HTTP_204_NO_CONTENT)
 
         # calls candidate_finder function - checks for valid matches, and adds the matches to the Match table
-        all_candidates = candidate_finder.candidate_finder(job_obj)
-        logger.info(f'All candidates for job {job_id}: {all_candidates}')
-        return Response(all_candidates, status=status.HTTP_200_OK)
+        all_candidates_query_set = candidate_finder.candidate_finder(job_obj)
+        all_candidate_ids = [candidate.candidate_id for candidate in all_candidates_query_set]
+        logger.info(f'Number of candidates for job {job_id}: {len(all_candidate_ids)}')
+        return Response(all_candidate_ids, status=status.HTTP_200_OK)
 
 
 @csrf_exempt
