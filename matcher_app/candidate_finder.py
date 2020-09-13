@@ -12,9 +12,6 @@ from the source string to the target string, with a lower distance representing 
 The downside to this approach is that it does not account for relevance, and misspellings / typos could completely
 transform the meaning of the word. This would be problematic when comparing "Developer" to "Engineer".
 Even though the two words are very similar job wise, the Levenshtein distance would be large between the two.
-
-Another way to solve this is to extract features from the text using something like word2vec, where
-the text data is converted into numeric format.
 """
 from matcher_app import utils, models
 from django.db.models import Q

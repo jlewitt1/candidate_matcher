@@ -74,9 +74,6 @@ The downside to this approach is that it does not account for relevance, and mis
 transform the meaning of the word. This would be problematic when comparing "Developer" to "Engineer".
 Even though the two words are very similar job wise, the Levenshtein distance would be large between the two.
 
-Another way to solve this is to extract features from the text using something like word2vec, where
-the text data is converted into numeric format.
-
 # Ranking the Candidates
 We can assign probabilities to each job skill - for example, we assume 70% of 
 candidates know python, while only 1% know cobalt. 
