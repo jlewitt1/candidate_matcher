@@ -71,8 +71,6 @@ WSGI_APPLICATION = 'matcher.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-os.environ['POSTGRES_USER'] = 'postgres'
-os.environ['POSTGRES_PASSWORD'] = 'root'
 
 DATABASES = {
     'default': {
